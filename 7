@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int reverse(int x) {
+        bool isNegative = (x<0);
+        string s = to_string((long long)abs((long long)x));
+        for(int i=0;i<s.length()/2;i++){
+               char temp=s[i];
+               s[i]=s[s.length()-i-1];
+               s[s.length()-i-1]=temp;
+        }
+        long long p=stoll(s);
+        if(isNegative)p=-p;
+        if(p<INT_MIN || p>INT_MAX)return 0;
+        return (int)p;
+    }
+};
