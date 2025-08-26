@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int areaOfMaxDiagonal(vector<vector<int>>& dimensions) {
+        long long best_d2 = -1;      // best diagonal squared
+        long long best_area = 0;     // best area for that diagonal
+
+        for (auto &dim : dimensions) {
+            long long l = dim[0];
+            long long b = dim[1];
+            long long d2 = l * l + b * b;   // squared diagonal
+            long long area = l * b;
+
+            if (d2 > best_d2 || (d2 == best_d2 && area > best_area)) {
+                best_d2 = d2;
+                best_area = area;
+            }
+        }
+        return (int)best_area; // cast back to int per function signature
+    }
+};
