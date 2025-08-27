@@ -1,0 +1,41 @@
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n = nums.size();
+        vector<vector<int>> ans;
+
+        sort(nums.begin(), nums.end()); // start with smallest permutation
+        ans.push_back(nums);
+
+        while (true) {
+            int idx = -1;
+            // Step 1: find pivot
+            for (int i = n - 2; i >= 0; i--) {
+                if (nums[i] < nums[i + 1]) {
+                    idx = i;
+                    break;
+                }
+            }
+            if (idx == -1) break; // last permutation reached
+
+            // Step 2: find just greater element
+            int ng = -1;
+            for (int i = n - 1; i > idx; i--) {
+                if (nums[i] > nums[idx]) {
+                    ng = i;
+                    break;
+                }
+            }
+
+            // Step 3: swap
+            swap(nums[idx], nums[ng]);
+
+            // Step 4: reverse the suffix
+            reverse(nums.begin() + idx + 1, nums.end());
+
+            ans.push_back(nums);
+        }
+
+        return ans;
+    }
+};
