@@ -1,0 +1,48 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> ans;
+        if (matrix.empty()) return ans;
+
+        int m = matrix.size();
+        int n = matrix[0].size();
+
+        int fr = 0, er = m - 1;  // first row, end row
+        int fc = 0, ec = n - 1;  // first col, end col
+
+        while (fr <= er && fc <= ec) {
+            // 1. Traverse top row (left → right)
+            for (int j = fc; j <= ec; j++) {
+                ans.push_back(matrix[fr][j]);
+            }
+            fr++;
+
+            // 2. Traverse right column (top → bottom)
+            for (int i = fr; i <= er; i++) {
+                ans.push_back(matrix[i][ec]);
+            }
+            ec--;
+
+            // 3. Traverse bottom row (right → left), if still valid
+            if (fr <= er) {
+                for (int j = ec; j >= fc; j--) {
+                    ans.push_back(matrix[er][j]);
+                }
+                er--;
+            }
+
+            // 4. Traverse left column (bottom → top), if still valid
+            if (fc <= ec) {
+                for (int i = er; i >= fr; i--) {
+                    ans.push_back(matrix[i][fc]);
+                }
+                fc++;
+            }
+        }
+
+        return ans;
+    }
+};
