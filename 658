@@ -1,0 +1,76 @@
+class Solution {
+public:
+    vector<int> findClosestElements(vector<int>& arr, int k, int x) {
+        int n=arr.size();
+        vector<int>ans;
+        if(x<=arr[0]){
+            int i=0;
+           while(k>0){
+              ans.push_back(arr[i]);
+              i++;
+              k--;
+           }
+           return ans;
+        }
+        if(x>arr[n-1]){
+            int i=n-1;
+            while(k>0){
+                ans.push_back(arr[i]);
+                i--;
+                k--;
+            }
+            sort(ans.begin(),ans.end());
+            return ans;
+        }
+        int low=0;
+        int high=n-1;
+        bool flag=false;
+        int lb=-1;
+        int ub=-1;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(arr[mid]==x){
+                flag=true;
+                lb=mid-1;
+                ub=mid+1;
+                ans.push_back(arr[mid]);
+                k--;
+                break;
+            }
+            else if(arr[mid]<x){
+                low=mid+1;
+            }
+            else{
+                high=mid-1;
+            }
+        }
+        if(flag==false){
+            lb=high;
+            ub=low;
+        }
+        while(k>0){
+            if(lb>=0 && ub<n){
+                if ((abs(arr[lb] - x) < abs(arr[ub] - x)) ||
+                    (abs(arr[lb] - x) == abs(arr[ub] - x) && arr[lb] < arr[ub])) {
+                        ans.push_back(arr[lb]);
+                        lb--;
+                    }
+                else{
+                    ans.push_back(arr[ub]);
+                    ub++;
+                }
+            }
+            else if(lb>=0){
+                ans.push_back(arr[lb]);
+                lb--;
+            }
+            else{
+                ans.push_back(arr[ub]);
+                ub++;
+            }
+            k--;
+        }
+        sort(ans.begin(),ans.end());
+        return ans;
+    }
+};
