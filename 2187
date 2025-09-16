@@ -1,0 +1,25 @@
+    bool canFinish(vector<int>& time, long long totalTrips, long long mid) {
+        long long trips = 0;
+        for (int t : time) {
+            trips += mid / t;   // how many trips this bus can make in 'mid' time
+            if (trips >= totalTrips) return true; // early stop
+        }
+        return trips >= totalTrips;
+    }
+
+    long long minimumTime(vector<int>& time, int totalTrips) {
+        long long low = 1;
+        long long high = 1LL * (*min_element(time.begin(), time.end())) * totalTrips;
+        long long ans = high;
+
+        while (low <= high) {
+            long long mid = low + (high - low) / 2;
+            if (canFinish(time, totalTrips, mid)) {
+                ans = mid;
+                high = mid - 1;   // try smaller time
+            } else {
+                low = mid + 1;    // need more time
+            }
+        }
+        return ans;
+    }
