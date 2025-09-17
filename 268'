@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int i=0;
+        int n=nums.size();
+        while(i<n){
+            int correctidx=nums[i];
+            if(i==correctidx || nums[i]==n) i++;
+            else swap(nums[i],nums[correctidx]);
+          
+        }
+      
+        i=0;
+        while(i<n){
+            if(nums[i]==i){
+                i++;
+            }
+            else{
+               
+                return i;
+            }
+        }
+       return n;
+    }
+};
