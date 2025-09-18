@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> answerQueries(vector<int>& nums, vector<int>& queries) {
+        int n=nums.size();
+        int m=queries.size();
+        sort(nums.begin(),nums.end());
+        vector<int>ans;
+        vector<int>pre(n,0);
+        pre[0]=nums[0];
+        for(int i=1;i<n;i++){
+            pre[i]=pre[i-1]+nums[i];
+        }
+        for(int q:queries){
+            int idx=upper_bound(pre.begin(),pre.end(),q)-pre.begin();
+            ans.push_back(idx);
+        }
+        
+        return ans;
+    }
+};
