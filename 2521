@@ -1,0 +1,45 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution {
+public:
+    // Function to build sieve of Eratosthenes
+    void buildSieve(vector<bool>& sieve) {
+        int n = sieve.size() - 1;
+        for (int i = 2; i * i <= n; i++) {
+            if (sieve[i]) {
+                for (int j = i * i; j <= n; j += i) {
+                    sieve[j] = false;
+                }
+            }
+        }
+    }
+
+    int distinctPrimeFactors(vector<int>& nums) {
+        if (nums.empty()) return 0;
+
+        // Find the maximum element in nums
+        int max_ele = *max_element(nums.begin(), nums.end());
+
+        // Build sieve up to max_ele
+        vector<bool> sieve(max_ele + 1, true);
+        sieve[0] = sieve[1] = false;
+        buildSieve(sieve);
+
+        unordered_set<int> prime_factors;
+
+        // Factorize each number using primes from the sieve
+        for (int num : nums) {
+            int temp = num;
+            for (int p = 2; p * p <= temp; p++) {
+                if (sieve[p] && temp % p == 0) {
+                    prime_factors.insert(p);
+                    while (temp % p == 0) temp /= p;
+                }
+            }
+            if (temp > 1) prime_factors.insert(temp); 
+        }
+
+        return prime_factors.size();
+    }
+};
