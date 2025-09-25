@@ -1,0 +1,43 @@
+class Solution {
+public:
+    vector<ListNode*> splitListToParts(ListNode* head, int k) {
+        ListNode* temp=head;
+        int N=0;
+        while(temp!=NULL){
+            N++;
+            temp=temp->next;
+        }
+        temp=head;
+        int len=N/k;
+        int x=N%k;
+        int y=k-x;
+        vector<ListNode*>fans;
+        while(x-- && temp!=NULL){
+            ListNode* p=temp;
+            ListNode* prev=NULL;
+            for(int i=0;i<len+1 && temp!=NULL;i++){
+                prev=temp;
+                temp=temp->next;
+            }
+            if(prev!=NULL)prev->next=NULL;
+            fans.push_back(p);
+        }
+        while(y-- && temp!=NULL){
+            ListNode* p=temp;
+            ListNode* prev=NULL;
+            for(int i=0;i<len && temp!=NULL;i++){
+                prev=temp;
+                temp=temp->next;
+            }
+            if(prev!=NULL)prev->next=NULL;
+            fans.push_back(p);
+        }
+        if(fans.size()==k)return fans;
+        else{
+            while(fans.size()!=k){
+                fans.push_back(nullptr);
+            }
+        }
+        return fans;
+    }
+};
