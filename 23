@@ -1,0 +1,38 @@
+class Solution {
+public:
+    ListNode* merge2linkedlists(ListNode* list1, ListNode* list2) {
+        ListNode* a=list1;
+        ListNode* b=list2;
+        ListNode* dummy=new ListNode(-1);
+        ListNode* c=dummy;
+        while(a && b){
+            if(a->val<=b->val){
+                  c->next = a;
+                  a=a->next;
+            }
+            else{
+                c->next=b;
+                b=b->next;
+            }
+            c=c->next;
+        }
+        if(a){
+            c->next=a;
+        }
+        else{
+            c->next=b;
+        }
+        return dummy->next;
+    }
+    ListNode* mergeKLists(vector<ListNode*>& arr) {
+        if(arr.size()==0)return nullptr;
+        while(arr.size()>1){
+            ListNode* a=arr[arr.size()-1];
+            arr.pop_back();
+            ListNode* b=arr[arr.size()-1];
+            arr.pop_back();
+            arr.push_back(merge2linkedlists(a,b));
+        }
+        return arr[0];
+    }
+};
