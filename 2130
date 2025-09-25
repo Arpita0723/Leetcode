@@ -1,0 +1,32 @@
+class Solution {
+public:
+    int pairSum(ListNode* head) {
+        ListNode* slow=head;
+        ListNode* fast=head;
+        ListNode* prev=NULL;
+        while(fast && fast->next){
+            prev=slow;
+            slow=slow->next;
+            fast=fast->next->next;
+        }
+        prev->next=NULL;
+        ListNode* p=slow;
+        ListNode* q=NULL;
+        ListNode* r=NULL;
+        while(p!=NULL){
+            r=q;q=p;p=p->next;
+            if(q!=NULL){
+                q->next=r;
+            }
+        }
+        slow=q;
+        int sum=INT_MIN;
+        while(head && slow){
+            int s=head->val+slow->val;
+            sum=max(s,sum);
+            head=head->next;
+            slow=slow->next;
+        }
+        return sum;
+    }
+};
