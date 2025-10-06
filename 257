@@ -1,0 +1,18 @@
+class Solution {
+public:
+    void helper(TreeNode* root,vector<string>&ans,string x){
+        if(root==NULL)return;
+        if(root->left==NULL && root->right==NULL){
+            x+=to_string(root->val);
+            ans.push_back(x);
+            return ;
+        }
+        helper(root->left,ans,x+to_string(root->val)+"->");
+        helper(root->right,ans,x+to_string(root->val)+"->");
+    }
+    vector<string> binaryTreePaths(TreeNode* root) {
+        vector<string>ans;
+        helper(root,ans,"");
+        return ans;
+    }
+};
