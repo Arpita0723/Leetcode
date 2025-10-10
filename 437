@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int countPaths(TreeNode* root, long long target) {
+        if (root == NULL) return 0;
+
+        int count = 0;
+        if (root->val == target) count++;
+
+        // Continue paths including current node
+        count += countPaths(root->left, target - root->val);
+        count += countPaths(root->right, target - root->val);
+
+        return count;
+    }
+
+    int pathSum(TreeNode* root, int targetSum) {
+        if (root == NULL) return 0;
+
+        // Paths starting from current node
+        int total = countPaths(root, targetSum);
+
+        // Also consider paths starting from left and right subtrees
+        total += pathSum(root->left, targetSum);
+        total += pathSum(root->right, targetSum);
+
+        return total;
+    }
+};
