@@ -1,0 +1,56 @@
+class Solution {
+public:
+    // int f(int m,int n,vector<vector<int>>&arr,vector<vector<int>>&dp){
+    //     if(m==0 && n==0)return arr[m][n]==0?dp[0][0]=1:dp[0][0]=0;
+    //     if(dp[m][n]!=-1)return dp[m][n];
+    //     int up=0, left=0;
+    //     if(n>0 && arr[m][n-1]!=1) left=f(m,n-1,arr,dp);
+    //     if(m>0 && arr[m-1][n]!=1) up=f(m-1,n,arr,dp);
+    //     return dp[m][n]=up+left;
+    // }
+    // void f(int m,int n,vector<vector<int>>&arr,vector<vector<int>>&dp){ 
+    //     int max_path=0;
+    //     for(int i=0;i<m;i++){
+    //         for(int j=0;j<n;j++){
+    //             if(i==0 && j==0)dp[0][0] = (arr[0][0] == 0) ? 1 : 0;
+    //             else if(arr[i][j]==1){
+    //                 dp[i][j]=0;
+    //                 continue;
+    //             }
+    //             else{
+    //                 int up=0, left=0;
+    //                 if(j>0 && arr[i][j-1]!=1) left=dp[i][j-1];
+    //                 if(i>0 && arr[i-1][j]!=1) up=dp[i-1][j];
+    //                 dp[i][j]=up+left;
+    //             }
+    //         }
+    //     }
+    // }
+    int  f(int m,int n,vector<vector<int>>&arr){ 
+        vector<int>prev(n,0);
+        for(int i=0;i<m;i++){
+            vector<int>curr(n,0);
+            for(int j=0;j<n;j++){
+                if(i==0 && j==0)curr[j]= (arr[0][0] == 0) ? 1 : 0;
+                else if(arr[i][j]==1){
+                    curr[j]=0;
+                    continue;
+                }
+                else{
+                    int up=0, left=0;
+                    if(j>0 && arr[i][j-1]!=1) left=curr[j-1];
+                    if(i>0 && arr[i-1][j]!=1) up=prev[j];
+                    curr[j]=up+left;
+                }
+            }
+            prev=curr;
+        }
+        return prev[n-1];
+    }
+    int uniquePathsWithObstacles(vector<vector<int>>&arr) {
+        int m=arr.size();
+        int n=arr[0].size();
+        if(arr[m-1][n-1]==1)return 0;
+        return f(m,n,arr);
+    }
+};
