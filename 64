@@ -1,0 +1,60 @@
+class Solution {
+public:
+    // int f(int m, int n, vector<vector<int>>& arr, vector<vector<int>>& dp) {
+    //     // 1. Check bounds first (before accessing arr or dp)
+    //     if (m < 0 || n < 0) return 1e9;
+
+    //     // 2. Base case
+    //     if (m == 0 && n == 0) return dp[m][n] = arr[m][n];
+
+    //     // 3. Memoization check
+    //     if (dp[m][n] != -1) return dp[m][n];
+
+    //     // 4. Recursive computation
+    //     int up = arr[m][n] + f(m - 1, n, arr, dp);
+    //     int left = arr[m][n] + f(m, n - 1, arr, dp);
+
+    //     // 5. Store and return result
+    //     return dp[m][n] = min(up, left);
+    // }
+    // int f(int m, int n, vector<vector<int>>& arr, vector<vector<int>>& dp) {
+    //     for(int i=0;i<m;i++){
+    //         for(int j=0;j<n;j++){
+    //             if (i == 0 && j == 0) dp[i][j] = arr[i][j];
+    //             else{
+    //                 int up=arr[i][j],left=arr[i][j];
+    //                 if(i>0)up+=dp[i-1][j];
+    //                 else up+=1e9;
+    //                 if(j>0)left+=dp[i][j-1];
+    //                 else left+=1e9;
+    //                 dp[i][j]=min(up,left);
+    //             }
+    //         }
+    //     }
+    //     return dp[m-1][n-1];
+    // }
+    int f(int m, int n, vector<vector<int>>& arr) {
+        vector<int>prev(n,0);
+        for(int i=0;i<m;i++){
+            vector<int>curr(n,0);
+            for(int j=0;j<n;j++){
+                if (i == 0 && j == 0) curr[j]= arr[i][j];
+                else{
+                    int up=arr[i][j],left=arr[i][j];
+                    if(i>0)up+=prev[j];
+                    else up+=1e9;
+                    if(j>0)left+=curr[j-1];
+                    else left+=1e9;
+                    curr[j]=min(up,left);
+                }
+            }
+            prev=curr;
+        }
+        return prev[n-1];
+    }
+    int minPathSum(vector<vector<int>>& arr) {
+        int m = arr.size();
+        int n = arr[0].size();
+        return f(m , n , arr);
+    }
+};
