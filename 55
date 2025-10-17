@@ -1,0 +1,16 @@
+class Solution {
+public:
+    bool canreach(vector<int>&nums,int i,int n,vector<int>&dp){
+        if(i>=n-1)return true;
+        if(nums[i]==0)return dp[i]=false;
+        if (dp[i] != -1) return dp[i];
+        for(int j=1;j<=nums[i];j++){
+            if(canreach(nums,i+j,n,dp)){return dp[i]=true;}
+        }
+        return dp[i]=false;
+    }
+    bool canJump(vector<int>& nums) {
+        vector<int>dp(nums.size(),-1);
+        return canreach(nums,0,nums.size(),dp);
+    }
+};
