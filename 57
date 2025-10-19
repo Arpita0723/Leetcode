@@ -1,0 +1,30 @@
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& arr, vector<int>& brr) {
+        if(arr.empty())return {brr};
+        int low=0;
+        int high=arr.size()-1;
+        int idx=0;
+        while(low<=high){
+            int mid=low+(high-low)/2;
+            if(arr[mid][0]<=brr[0]){
+                idx=mid;
+                low=mid+1;}
+            else high=mid-1;
+        }
+
+        if (brr[0] > arr[idx][0]) idx++;
+        if (idx < 0) idx = 0;
+        if (idx > arr.size()) idx = arr.size();
+        arr.insert(arr.begin() + idx, brr);
+
+        vector<vector<int>>ans;
+        ans.push_back(arr[0]); 
+        for(int i=1;i<arr.size();i++){
+            vector<int>&curr=ans.back();
+            if(curr[1]>=arr[i][0])curr[1]=max(arr[i][1],curr[1]);
+            else ans.push_back(arr[i]);
+        }
+        return ans;
+    }
+};
