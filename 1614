@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int maxDepth(string s) {
+        int i=0;
+        int count=0;
+        int maxlen=0;
+        while(i<s.length()){
+            if(s[i]=='('){
+               count++;
+               i++;
+            }
+            else if(s[i]==')'){
+                maxlen=max(maxlen,count);
+                count-=1;
+                i++;
+            }
+            else{
+                i++;
+            }
+        }
+        return maxlen;
+    }
+};
