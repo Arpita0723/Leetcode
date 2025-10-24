@@ -1,0 +1,17 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int i=s.length()-1;
+        int j=s.length()-1;
+        string r="";
+        while(i>=0){
+            while(i>=0 && s[i]==' ')i--;
+            if(i<0)break;
+            j=i;
+            while(i>=0 && s[i]!=' ')i--;
+            if(!r.empty())r+=' ';
+            r+=s.substr(i+1,j-i);
+        }
+        return r;
+    }
+};
