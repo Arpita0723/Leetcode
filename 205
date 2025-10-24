@@ -1,0 +1,19 @@
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        if(s.length()!=t.length())return false;
+        unordered_map<char,char>seen;
+        unordered_map<char,char>teen;
+        int i=0;
+        while(i<s.length()){
+            char a=s[i];
+            char b=t[i];
+            if(seen.count(a) && seen[a]!=b)return false;
+            if(teen.count(b) && teen[b]!=a)return false;
+            seen[a]=b;
+            teen[b]=a;
+            i++;
+        }
+        return true;
+    }
+};
