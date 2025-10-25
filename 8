@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int myAtoi(string s) {
+        int i=0;
+        while(i<s.length() && s[i]==' ')i++;
+        int sign=1;
+        if(i<s.length() && (s[i]=='+' || s[i]=='-')){
+            if(s[i]=='-')sign=-1;
+            i++;
+        }
+        long long num=0;
+        while(i<s.length() && s[i]>='0' && s[i]<='9'){
+            num=num*10+s[i]-'0';
+            if(num*sign>INT_MAX)return INT_MAX;
+            if(num*sign<INT_MIN)return INT_MIN;
+            i++;
+        }
+        num*=sign;
+        return (int)num;
+    }
+};
