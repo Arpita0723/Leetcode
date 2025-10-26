@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int helper(long long exp,long long const M,long long base){
+        if(exp==0)return 1;
+        long long half=helper(exp/2,M,base);
+        long long res=(half*half)%M;
+        if(exp%2==1){
+            res=(res*base)%M;
+        }
+        return res;
+    }
+    int countGoodNumbers(long long n) {
+       long long const M=1e9+7; 
+       long long odd=n/2;
+       long long even=n%2==0?n/2:n/2+1;
+       long long x= helper(odd,M,4);
+       long long y=helper(even,M,5);
+       return (x*y)%M;
+    }
+};
