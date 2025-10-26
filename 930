@@ -1,0 +1,17 @@
+class Solution {
+public:
+    int numSubarraysWithSum(vector<int>& nums, int target) {
+           int curr_sum=0;
+           int count =0;
+           unordered_map<int,int>freq;
+           freq[0]=1;
+           for(int i=0;i<nums.size();i++){
+              curr_sum+=nums[i];
+              if(freq.find(curr_sum-target)!=freq.end()){
+                count+=freq[curr_sum-target];
+              }
+              freq[curr_sum]++;
+           }
+           return count;
+    }
+};
