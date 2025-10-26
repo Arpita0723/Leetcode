@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void helper(string s,int count_open,int count_closed,vector<string>&ans){
+        if(count_open==0){
+            while(count_closed!=0){
+                s+=')';
+                count_closed--;            
+        }
+        ans.push_back(s);
+        return;
+        }
+        helper(s+'(',count_open-1,count_closed,ans);
+        if(count_closed>count_open)helper(s+')',count_open,count_closed-1,ans);
+        return ;
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string>ans;
+        helper("",n,n,ans);
+        return ans;
+    }
+};
