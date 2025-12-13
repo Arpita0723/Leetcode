@@ -1,0 +1,25 @@
+class Solution {
+public:
+
+
+    int minCost(int n, vector<int>& arr) {
+        arr.insert(arr.begin(), 0);
+        arr.push_back(n);
+        sort(arr.begin(), arr.end());
+
+        int c = arr.size() - 2;  
+
+        vector<vector<int>> dp(c + 2, vector<int>(c + 2, 0));
+        for(int i=c;i>=1;i--){
+            for(int j=i;j<=c;j++){
+                int mini = INT_MAX;
+        for (int idx = i; idx <= j; idx++) {
+            int cost=arr[j+1]-arr[i-1]+dp[i][idx - 1]+dp[idx + 1][j];
+            mini = min(mini, cost);
+        }
+        dp[i][j]=mini;
+            }
+        }
+        return dp[1][c];
+    }
+};
